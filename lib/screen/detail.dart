@@ -4,6 +4,7 @@ import 'package:todo_app_g12/core/theme/dimens.dart';
 import 'package:todo_app_g12/core/theme/strings.dart';
 import 'package:todo_app_g12/core/theme/text_styles.dart';
 import 'package:todo_app_g12/core/utils/app_snackbar.dart';
+import 'package:todo_app_g12/core/widgets/app_back_button.dart';
 import 'package:todo_app_g12/core/widgets/app_button.dart';
 import 'package:todo_app_g12/model/todo.dart';
 import 'package:todo_app_g12/service/todo_controller.dart';
@@ -84,14 +85,7 @@ class _DetailState extends State<Detail> {
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: AppColors.mainColor,
-        leading: IconButton(
-          onPressed: _goBack,
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: AppColors.white,
-            size: 32,
-          ),
-        ),
+        leading: const AppBackButton(),
         title: Text(
           widget.id == null ? AppStrings.addTask : AppStrings.editTask,
           style: AppTextStyles.appBar,

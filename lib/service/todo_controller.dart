@@ -9,6 +9,7 @@ class TodoController {
 
   List<Todo> _list = [];
   List<Todo> get items => _list;
+  List<Todo> get completedItems => _list.where((todo) => todo.isCompleted).toList();
 
   void add(String title, String detail) {
     final todo = Todo(id: _list.length + 1, title: title, description: detail);

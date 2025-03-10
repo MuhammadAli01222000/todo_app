@@ -5,10 +5,9 @@ import 'package:todo_app_g12/core/theme/dimens.dart';
 import 'package:todo_app_g12/core/theme/icons.dart';
 import 'package:todo_app_g12/core/theme/strings.dart';
 import 'package:todo_app_g12/core/theme/text_styles.dart';
-import 'package:todo_app_g12/model/todo.dart';
+import 'package:todo_app_g12/core/utils/app_snackbar.dart';
+import 'package:todo_app_g12/core/widgets/todo_card.dart';
 import 'package:todo_app_g12/service/todo_controller.dart';
-
-import '../core/utils/app_snackbar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -49,6 +48,12 @@ class _HomeState extends State<Home> {
     }
   }
 
+  void _goCompleted(int page) {
+    if(page == 1) {
+      Navigator.of(context).pushNamed(AppRoutes.completed);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +87,7 @@ class _HomeState extends State<Home> {
     return BottomNavigationBar(
       selectedItemColor: AppColors.mainColor,
       backgroundColor: AppColors.white,
+      onTap: _goCompleted,
       items: [
         BottomNavigationBarItem(icon: AppIcons.playlist, label: AppStrings.all),
         BottomNavigationBarItem(icon: AppIcons.tick, label: AppStrings.completed),
@@ -98,40 +104,6 @@ class _HomeState extends State<Home> {
         backgroundColor: AppColors.mainColor,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: AppColors.white),
-      ),
-    );
-  }
-}
-
-class TodoCard extends StatelessWidget {
-  final Todo todo;
-  final void Function(Todo)? edit;
-  final void Function(Todo)? delete;
-  final void Function(Todo)? check;
-
-  const TodoCard({required this.todo, this.edit, this.delete, this.check, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(todo.title),
-        subtitle: Text(todo.description),
-        contentPadding: AppDimens.paddingL16,
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (edit != null) IconButton(onPressed: () => edit!(todo), icon: AppIcons.pencil),
-            if (delete != null) IconButton(onPressed: () => delete!(todo), icon: AppIcons.trash),
-            if (check != null)
-              IconButton(
-                onPressed: () => check!(todo),
-                icon: AppIcons.checkCircle.copyWith(
-                  color: todo.isCompleted ? AppColors.green : AppColors.grey,
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
